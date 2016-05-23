@@ -169,12 +169,26 @@ public class VentanaRegistro extends javax.swing.JFrame {
 
     private void crearPerfil_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearPerfil_btnActionPerformed
         String nom = nombre_txt.getText();
-        char gen = String.valueOf(genero_cbx.getSelectedItem()).charAt(0);
+        String gen = String.valueOf(genero_cbx.getSelectedItem());
+        char g = gen.charAt(0);
         String user = username_txt.getText();
-        char contra[] = contrasena_txt.getPassword();
+        char confPass[] = confirmarContrasena_txt.getPassword();
+        char pass[] = contrasena_txt.getPassword();
         char mant = 'N'; // Por defecto no se mantine la sesion de un usuario recien creado, se puede cambiar al iniciar sesion.
-        String resultado = miCoordinador.crearUsuario(nom, gen, user, contra, mant);
-        JOptionPane.showMessageDialog(this, resultado);
+        String contra = miCoordinador.cifrarPass(pass); // Envio char[] y recibo String
+        if (contra == "ERROR de Cifrado") {
+            JOptionPane.showMessageDialog(this,"\nNo se permite el character [ . ]");
+        }
+        else if((miCoordinador.verificarPass(confPass,pass)==false))
+            JOptionPane.showMessageDialog(this,"\nContraseñas no coinciden");
+        
+        else if((nom.equals("")) | (gen.equals("")) | (user.equals(""))| (contra.equals("")))
+                JOptionPane.showMessageDialog(this,"\nNo se permiten campos vacios");
+        else {
+            String resultado = miCoordinador.crearUsuario(nom, g, user, contra, mant);
+            JOptionPane.showMessageDialog(this, resultado);
+        }
+
     }//GEN-LAST:event_crearPerfil_btnActionPerformed
 
     private void contrasena_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasena_txtActionPerformed

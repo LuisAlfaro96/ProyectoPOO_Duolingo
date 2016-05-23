@@ -9,11 +9,11 @@ public class Usuario {
     private String NombreCompleto;
     private char genero;
     private String User;
-    private char[] Pass;
+    private String Pass;
     private Perfil perfil;
     private char mantenerSesion;
 
-    public Usuario(String Nombre_Completo,char genero, String User, char[] Pass, char mantener) {
+    public Usuario(String Nombre_Completo,char genero, String User, String Pass, char mantener) {
 
         this.NombreCompleto = Nombre_Completo;
         this.genero = genero;
@@ -49,11 +49,11 @@ public class Usuario {
         this.User = User;
     }
 
-    public char[] getPass() {
+    public String getPass() {
         return Pass;
     }
 
-    public void setPass(char[] Pass) {
+    public void setPass(String Pass) {
         this.Pass = Pass;
     }
 

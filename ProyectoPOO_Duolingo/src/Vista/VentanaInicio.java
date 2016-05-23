@@ -171,6 +171,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         VentanaRegistro registro = new VentanaRegistro();
         registro.setVisible(true);
         registro.setLocationRelativeTo(null);
+        registro.setCoordinador(miCoordinador);
         dispose();
     }//GEN-LAST:event_registrarse_btnActionPerformed
 

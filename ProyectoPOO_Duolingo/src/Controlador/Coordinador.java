@@ -34,7 +34,8 @@ public class Coordinador {
         this.miLogica = miLogica;
     }
 
-    public String crearUsuario(String nom, char gen,String user, char[] contra, char mant) {
+    public String crearUsuario(String nom, char gen,String user,String contra, char mant) {
+        
         return miLogica.crearUsuario(nom,gen,user,contra, mant);
     }
 
@@ -44,6 +45,18 @@ public class Coordinador {
 
     public Usuario getUsuarioActual() {
         return miLogica.getUsuarioActual();
+    }
+
+    public String cifrarPass(char[] pass) {
+            return this.miLogica.cifrarPass(pass);
+    }
+
+    public String desCifrarPass(String contra) {
+        return this.miLogica.desCifrarPass(contra);
+    }
+
+    public boolean verificarPass(char[] confPass, char[] pass) {
+        return this.miLogica.verificarPass(confPass,pass);
     }
 
     

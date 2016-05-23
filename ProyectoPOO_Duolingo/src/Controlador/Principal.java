@@ -20,7 +20,7 @@ public class Principal {
         VP.setLocationRelativeTo(null);
         VentanaInicio VI = VentanaInicio.getInstance();
         VI.setLocationRelativeTo(null);
-        VI.setVisible(true);
+        VP.setVisible(true);
         //Relaciones MVC
         CORE.setVentanaPrincipal(VP);
         CORE.setVentanaInicio(VI);
@@ -31,7 +31,8 @@ public class Principal {
         logica.setCoordinador(CORE);
         
         //Cargar datos de usuarios.
-        //logica.cargarUsuarios();
+        logica.cargarUsuarios();
+        //logica.eliminarUsuario("a");
        
        
         

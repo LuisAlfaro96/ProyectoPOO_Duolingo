@@ -82,11 +82,10 @@ public class Plataforma {
                 String user = linea.split("#")[2];
                 String pass = linea.split("#")[3];
                 char mant = linea.split("#")[4].charAt(0);
-                char c = pass.charAt(0);
-                char[] contra = pass.toCharArray();
-                Usuario u = new Usuario(nombre, gen, user, contra, mant);
+               
+                Usuario u = new Usuario(nombre, gen, user, pass, mant);
                 this.listaUsuarios.add(u);
-                System.out.println("\t" + nombre + " : " + linea.split("#")[1] + " : " + user + " : " + String.valueOf(contra)); // Linea de comprobacion a consola
+                System.out.println("\t" + nombre + " : " + linea.split("#")[1] + " : " + user + " : " + desCifrarPass(pass)); // Linea de comprobacion a consola
 
             }
             usuarios.close();
@@ -132,6 +131,8 @@ public class Plataforma {
         }
     }
 
+    
+    
     public String eliminarUsuario(String user) {
 
         boolean result = listaUsuarios.remove(buscarUsuario(user)); // boramos el objeto usuario
@@ -160,20 +161,43 @@ public class Plataforma {
             csvOutput.write(u.getNombreCompleto());
             csvOutput.write(String.valueOf(u.getGenero()));
             csvOutput.write(u.getUser());
-            csvOutput.write(String.valueOf(u.getPass()));
+            csvOutput.write(u.getPass()); 
             csvOutput.write(String.valueOf(u.getMantenerSesion()));
-            
             csvOutput.endRecord();
 
             csvOutput.close();
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
 
     }
+    
+    public String cifrarPass(char[] pass){
+        String cadena = "";
+        for(int k=0;k<pass.length;k++){
+            int numero = (int) pass[k]-11;
+            if (numero == 35){
+                return "ERROR de Cifrado";
+            }
+                
+            cadena += String.valueOf((char)numero);
+        }
+        
+        return cadena;
+    }
+    
+    public String desCifrarPass(String pass){
+        String cadena = "";
+        for(int k=0;k<pass.length();k++){
+            int numero = ((int) pass.charAt(k))+11;
+            cadena += String.valueOf((char)numero);
+        }
+        return cadena;
+    }
 
-    public String crearUsuario(String nom, char gen, String user, char[] contra, char mant) {// Necesitamos agregar el objeto perfil asociado por parametro
+    public String crearUsuario(String nom, char gen, String user, String contra, char mant) {// Necesitamos agregar el objeto perfil asociado por parametro
+        
         Usuario u = new Usuario(nom, gen, user, contra, mant);
         Iterator<Usuario> iterador = this.listaUsuarios.iterator();
         while (iterador.hasNext()) {
@@ -183,6 +207,7 @@ public class Plataforma {
             iterador.next();
         }
         this.listaUsuarios.add(u);
+        
         guardarNuevoUsuario(u);
         //System.out.println(usuariosPorGenero('M'));
 
@@ -200,4 +225,18 @@ public class Plataforma {
     }
 
     // ###############################################
+
+    public boolean verificarPass(char[] confPass, char[] pass) { // retorna true si son iguales,false si son diferentes
+        if(confPass.length != pass.length){
+            return false;
+        }
+        for(int k=0;k<pass.length;k++){
+            int char1 = pass[k];
+            int char2 = confPass[k];
+            if ((char1 != char2)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
